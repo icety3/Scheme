@@ -1,0 +1,40 @@
+(define (accumulate op init l h)
+  (if (> l h)
+      init
+      (op l (accumulate op init (+ l 1) h))))
+
+(define (enum-leaves l)
+  (cond ((null? l) '())
+        ((pair? (car l))
+         (append (enum-leaves (car l)) (enum-leaves (cdr l))))
+        (else (cons (car l) (enum-leaves (cdr l))))))
+
+(define (filter is? l)
+  (cond ((null? l) '())
+        ((is? (car l))
+         (cons (car l) (filter is? (cdr l))))
+        (else (filter is? (cdr l)))))
+
+(define (fib n)
+  (define (iter pre-pre pre cur)
+    (if (= cur n)
+        (+ pre-pre pre)
+        (iter pre (+ pre-pre pre) (+ cur 1))))
+  (iter -1 1 0))
+
+(define (make-list op l h)
+  (if (> l h)
+      '()
+      (cons (op l) (make-list op (+ l 1) h))))
+
+(define (mmemq p l)
+  (cond ((null? l) #f)
+        ((eq? p (car l)) l)
+        (else (mmemq p (cdr l)))))
+
+(define (mequal? a b)
+  (cond ((and (pair? a) (pair? b))
+         (and (mequal? (car a) (car b))
+              (mequal? (cdr a) (cdr b))))
+        ((eq? a b) #t)
+        (else #f)))

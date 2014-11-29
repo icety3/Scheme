@@ -1,0 +1,36 @@
+; -Public Function
+(define (square x) (* x x))
+
+; -DEF point
+;  -CONS : make-point
+;  -MEMB : x-is & y-is
+(define (make-point x y)
+  (cons x y))
+(define (x-is p)
+  (car p))
+(define (y-is p)
+  (cdr p))
+; -DEF line
+;  -CONS : make-line
+;  -MEMB : s-is & t-is
+(define (make-line s t)
+  (cons s t))
+(define (s-is l)
+  (car l))
+(define (t-is l)
+  (cdr l))
+; -FUNC -line
+(define (line-s&t-iter op x?y object)
+  (op (x?y (s-is object))
+      (x?y (t-is object))))
+(define (mid-point l)
+  (make-point
+   (/ (line-s&t-iter + x-is l) 2)
+   (/ (line-s&t-iter + y-is l) 2)))
+(define (k-of-line l)
+  (/ (line-s&t-iter - y-is l)
+     (line-s&t-iter - x-is l)))
+(define (length-line l)
+  (sqrt
+   (+ (square (line-s&t-iter - x-is l))
+      (square (line-s&t-iter - y-is l)))))
